@@ -24,10 +24,13 @@ if (flutterVersionName == null) {
 
 android {
     namespace "com.example.super_app"
-    compileSdk flutter.compileSdkVersion
+    // flutter_gemma (on-device LLM / MediaPipe) is built against API 36.
+    compileSdk 36
     ndkVersion flutter.ndkVersion
 
     compileOptions {
+        // Required by flutter_local_notifications for scheduled notifications.
+        coreLibraryDesugaringEnabled true
         sourceCompatibility JavaVersion.VERSION_11
         targetCompatibility JavaVersion.VERSION_11
     }
@@ -45,7 +48,8 @@ android {
         applicationId "com.example.super_app"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
-        minSdkVersion flutter.minSdkVersion
+        // flutter_gemma (MediaPipe LLM) requires a minimum of API 24.
+        minSdkVersion 24
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
@@ -56,6 +60,9 @@ android {
             // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig signingConfigs.debug
+            // Keep/dontwarn rules so R8 doesn't fail on flutter_gemma/MediaPipe's
+            // compile-time-only references.
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
 }
@@ -64,4 +71,6 @@ flutter {
     source '../..'
 }
 
-dependencies {}
+dependencies {
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.1.4'
+}
