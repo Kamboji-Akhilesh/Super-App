@@ -17,6 +17,8 @@ void main() {
     );
 
     expect(find.text('Super App'), findsOneWidget);
-    expect(find.text('Currency Converter'), findsOneWidget);
+    // Bento tiles for the available mini-apps.
+    expect(find.text('Calendar'), findsOneWidget);
+    expect(find.text('Currency'), findsOneWidget);
   });
 }
