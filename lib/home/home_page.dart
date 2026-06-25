@@ -3,6 +3,7 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 import '../features/calendar/presentation/calendar_page.dart';
 import '../features/currency/presentation/currency_home_page.dart';
+import '../features/notes/presentation/notes_page.dart';
 
 /// App dashboard: a bento-style grid of mini-apps. Add a new app by appending
 /// to [_apps] — its tile size comes from [_MiniApp.cross] (columns of 4) and
@@ -81,6 +82,15 @@ class HomePage extends StatelessWidget {
           icon: Icons.currency_exchange,
           route: CurrencyHomePage.route,
           colors: [scheme.secondary, scheme.primary],
+          cross: 2,
+          height: 132,
+        ),
+        _MiniApp(
+          title: 'Notes',
+          subtitle: 'Quick thoughts & lists',
+          icon: Icons.sticky_note_2,
+          route: NotesPage.route,
+          colors: [scheme.tertiary, scheme.secondary],
           cross: 2,
           height: 132,
         ),
